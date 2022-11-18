@@ -7,7 +7,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './artist.css'
 import CardBanner from '../../components/CardBanner'
 import { useDispatch, useSelector } from 'react-redux'
-import {enable} from '../../reducers/PlayerReducer'
+import { enable } from '../../reducers/PlayerReducer'
 
 const styles = {
   media: {
@@ -37,7 +37,7 @@ function Artist() {
   useEffect(() => {
     getAllMusic()
     getAllArtists()
-   
+
   }, [])
   const getAllMusic = async () => {
     const Music = await musicDataService.getAllMusic();
@@ -69,7 +69,7 @@ function Artist() {
     src: item?.imageurl,
     artist: item?.artist,
   }));
-  
+
   return (
     <Box sx={{ mt: 8, bgcolor: "rgba(0, 0, 0,0.31)" }}>
       <Box height="30vh" sx={{ bgcolor: "rgba(0, 0, 0,0.31)", mt: 5 }} >
@@ -101,17 +101,17 @@ function Artist() {
       </Box>
       {isShow ?
         <Box>
-          <Button onClick={albumClose}><ArrowBackIcon sx={{color:'#FFFFFF'}}/></Button>
+          <Button onClick={albumClose}><ArrowBackIcon sx={{ color: '#FFFFFF' }} /></Button>
         </Box> : ''
       }
       <Box sx={{ bgcolor: "rgba(0, 0, 0,0.31)", mt: 1 }} >
         <Outlet />
         <Box sx={{ mt: 1, overflow: 'auto' }} className='screen-container'>
           <Stack direction="row" spacing={1} >
-            <Box  sx={{width:'100%'}}>
-               <CardBanner  data={normalizedAlbumData} titleData={'artist'} />
+            <Box sx={{ width: '100%' }}>
+              <CardBanner data={normalizedAlbumData} titleData={'artist'} />
             </Box>
-          </Stack> 
+          </Stack>
         </Box>
       </Box>
     </Box>

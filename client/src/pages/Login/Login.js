@@ -4,6 +4,7 @@ import { Stack } from '@mui/system'
 import React, { useEffect, useState } from 'react'
 import { useUserAuth } from '../../context/UserAuthContext'
 import { Link, useNavigate } from 'react-router-dom';
+import BeatLoader from 'react-spinners/BeatLoader'
 import './login.css'
 
 function Login() {
@@ -78,6 +79,7 @@ function Login() {
                     <input type="password" placeholder="Password" required="required" defaultValue={password} onChange={(e) => setPassword(e.target.value)} />
                     <Box sx={{color:'red'}}>{message && !password?"Enter Password":''}</Box>
                     <button onClick={handleSubmit} type="submit" className="btn btn-primary btn-block btn-large">Login</button>
+                    <BeatLoader loading={loading} color="#FFFFFF" />
                     <Box mt={2}> {error && <Alert severity="error">{error}</Alert>}</Box>
                     <Typography sx={{ mt: 6, ml: 7, color: '#FFFFFF', opacity: 0.5 }}>New User ?<Link to={'/signup'} style={{ textDecoration: 'none', color: "#FFFFFF" }}>Sign up Now </Link> </Typography>
                   </div>

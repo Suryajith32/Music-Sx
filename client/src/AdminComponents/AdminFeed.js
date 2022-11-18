@@ -9,5 +9,4 @@ function AdminFeed() {
    </Box>
   )
 }
-
 export default AdminFeed

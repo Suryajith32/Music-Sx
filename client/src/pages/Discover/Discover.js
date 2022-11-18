@@ -15,8 +15,6 @@ import { Stack } from '@mui/system';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-
-
 const styles = {
   media: {
     height: 0,

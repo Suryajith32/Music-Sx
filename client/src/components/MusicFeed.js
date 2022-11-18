@@ -5,9 +5,9 @@ import { Outlet } from 'react-router-dom';
 function MusicFeed() {
   return (
     <>
-      <Box 
-        flex={4}>  
-       <Outlet/>
+      <Box
+        flex={4}>
+        <Outlet />
       </Box>
     </>
   )

@@ -37,14 +37,13 @@ function Sidebar() {
               </ListItem>
             </NavLink>
           ))}
-           <ListItem  disablePadding>
-                <ListItemButton>
-                  <ListItemIcon sx={{ color: "#FFFFFF" }}>
-                  
-                  </ListItemIcon >
-                  <ListItemText primary='Logout'/>
-                </ListItemButton>
-              </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon sx={{ color: "#FFFFFF" }}>
+              </ListItemIcon >
+              <ListItemText primary='Logout' />
+            </ListItemButton>
+          </ListItem>
         </List>
       </Box>
     </Box>

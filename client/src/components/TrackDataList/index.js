@@ -30,29 +30,28 @@ function AlbumList(props) {
     const [email, setEmail] = useState()
     const [currentSong, setCurrentSong] = useState()
     const [favmusic, setFavMusic] = useState()
-    const [favName,setFavName] = useState();
+    const [favName, setFavName] = useState();
     const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0)
 
     useEffect(() => {
         CheckAllFav()
-        console.log("props", props)
         setSmlBanner(props.currentItem?.src)
         setBannerTitle(props.currentItem?.title)
         setArtistName(props.currentItem?.artist)
         setEmail(localStorage.getItem("email"))
     }, [reducerValue])
-     
-     const CheckAllFav = async()=>{
+
+    const CheckAllFav = async () => {
         const unId = localStorage.getItem("email")
         const favMusic = await favDataService.getAllfav()
         const data = favMusic?.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
         const fil = data && data?.filter(n => n.email === unId)
         setFavMusic(fil)
-        const SongName = fil && fil?.map((doc)=>{
-        return doc.song
+        const SongName = fil && fil?.map((doc) => {
+            return doc.song
         })
         setFavName(SongName)
-     }
+    }
 
 
     const handleClickPLay = async (id, e, index, item) => {
@@ -73,29 +72,29 @@ function AlbumList(props) {
             dispatch(pause(true))
         }
     }
-    const handleFav = async(e) => {
+    const handleFav = async (e) => {
         const check = favName && favName?.includes(e.song)
-        if(!check){
+        if (!check) {
             const fav = {
                 ...e,
                 email
             }
             await favDataService.addfav(fav)
             forceUpdate()
-        }else{
-            const Unlike = favmusic&&favmusic?.filter((n)=>n.song ===e.song)
+        } else {
+            const Unlike = favmusic && favmusic?.filter((n) => n.song === e.song)
             await favDataService.deletefav(Unlike[0]?.id)
             forceUpdate()
         }
     }
     return (
         <div className='trackContainer'>
-            <Box maxHeight='70vh' minHeight='37vh' className='heloooooo' sx={{ bgcolor: "rgba(0, 0, 0,0.31)",width:'100%'}}>
+            <Box maxHeight='70vh' minHeight='37vh' className='heloooooo' sx={{ bgcolor: "rgba(0, 0, 0,0.31)", width: '100%' }}>
                 <Paper
                     sx={{
                         p: 2,
                         // margin: 'auto',
-                        pt:6,
+                        pt: 6,
                         maxWidth: 700,
                         flexGrow: 1,
                         backgroundColor: "transparent"
@@ -103,7 +102,7 @@ function AlbumList(props) {
                 >
                     <Grid container spacing={2}>
                         <Grid item>
-                            <ButtonBase sx={{ width: 128, height: 128,ml:4 }}>
+                            <ButtonBase sx={{ width: 128, height: 128, ml: 4 }}>
                                 <Img alt="complex" src={smlBanner} />
                             </ButtonBase>
                         </Grid>
@@ -113,14 +112,14 @@ function AlbumList(props) {
                                     <Typography variant="h3" sx={{
                                         color: '#FFFFFF', top: '110px',
                                         fontWeight: 600,
-                                        ml:4,
+                                        ml: 4,
                                     }}>{bannerTitle}</Typography>
                                     <Typography variant="h5" sx={{
                                         display: { xs: "none", sm: "block" },
                                         color: '#FFFFFF',
                                         fontWeight: 600,
                                         opacity: 0.5,
-                                        ml:4
+                                        ml: 4
                                     }}>{artistname}</Typography>
 
                                 </Grid>
@@ -134,9 +133,9 @@ function AlbumList(props) {
                     </Grid>
                 </Paper>
             </Box>
-            <Card sx={{ mt: 2, background: "rgba(0, 0, 0,0.31)",width:'100%' }}>
+            <Card sx={{ mt: 2, background: "rgba(0, 0, 0,0.31)", width: '100%' }}>
                 <CardContent style={{ overflow: 'auto', background: "rgba(0, 0, 0,0.31)" }}>
-                    <Box sx={{ maxHeight: '100vh',width:'100%', left: 0 }} >
+                    <Box sx={{ maxHeight: '100vh', width: '100%', left: 0 }} >
                         {props.tracks && props.tracks?.map((item, index) => (
                             <Box key={index} sx={{ mt: 4 }}>
                                 <Stack direction="row" spacing={0} justifyContent="space-between" >
@@ -174,7 +173,7 @@ function AlbumList(props) {
                                                 justifyContent="flex-end"
                                                 alignItems="center"
                                             >
-                                                <button className='play-btn' onClick={() => handleFav(item)}>{favName&&favName?.includes(item.song)? <FavoriteIcon sx={{ mr: 8, color: "#FFFFFF" }} /> : <FavoriteBorderIcon sx={{ mr: 8, color: "#FFFFFF" }} />}</button>
+                                                <button className='play-btn' onClick={() => handleFav(item)}>{favName && favName?.includes(item.song) ? <FavoriteIcon sx={{ mr: 8, color: "#FFFFFF" }} /> : <FavoriteBorderIcon sx={{ mr: 8, color: "#FFFFFF" }} />}</button>
                                                 <button onClick={() => handleClickPLay(item.musicUrl, props?.tracks, index, item)} className='play-btn'>
                                                     {/* <audio src={currentSong} ref={audioElm} /> */}
                                                     {currentSong === item && isPlay ? <PauseCircleFilledIcon sx={{ mr: 8, color: "#FFFFFF" }} /> : <PlayCircleFilledIcon sx={{ mr: 8, color: "#FFFFFF" }} />}

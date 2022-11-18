@@ -10,7 +10,6 @@ import 'react-toastify/dist/ReactToastify.css';
 toast.configure()
 
 function AddMusic() {
-
     const [song, setSong] = useState();
     const [artist, setArtist] = useState();
     const [loading, setIsLoading] = useState(false)
@@ -20,7 +19,6 @@ function AddMusic() {
     const [imageurl, setImageUrl] = useState();
     const [musicUrl, setMusicUrl] = useState();
     const [message, setMessage] = useState();
-
 
     //MUSIC UPLOADING TO FIREBASE//
 
@@ -45,7 +43,6 @@ function AddMusic() {
 
     const uploadImage = (e) => {
         const imageFile = e.target.files[0];
-        console.log(imageFile)
         const storageRef = ref(storage, `Images/ &{Date.now()}-${imageFile.name}`)
         const uploadTask = uploadBytesResumable(storageRef, imageFile);
         uploadTask.on('state_changed', (snapshot) => {
@@ -80,7 +77,7 @@ function AddMusic() {
             toast.error("Error Uploading Music", {
             })
         }
-        setIsLoading(false) 
+        setIsLoading(false)
         setSong("")
         setArtist("")
         setAlbum("")

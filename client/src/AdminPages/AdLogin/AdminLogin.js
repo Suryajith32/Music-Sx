@@ -19,7 +19,6 @@ function AdminLogin() {
     if (regEx.test(email)) {
       try {
         const unId = localStorage.getItem("email")
-        console.log(unId)
         const data = await userDataServices.getAllUser()
         const userData = data?.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
         const fil = userData && userData?.filter(n => n.emaiil === email)

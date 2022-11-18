@@ -15,7 +15,6 @@ const Img = styled('img')({
 });
 
 function Banner() {
-
     const [music, setMusic] = useState()
     const [slideIndex, setSlideIndex] = useState(0)
 

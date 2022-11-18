@@ -120,7 +120,7 @@ export default function AcccessibleTable() {
                                             {doc.name}
                                         </TableCell>
                                         <TableCell align="right">{doc.email}</TableCell>
-                                        <TableCell onClick={(e) => deleteHandler(doc.id)} align="right"><DeleteIcon/></TableCell>
+                                        <TableCell onClick={(e) => deleteHandler(doc.id)} align="right"><DeleteIcon /></TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

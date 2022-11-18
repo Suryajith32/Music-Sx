@@ -7,11 +7,11 @@ import Sidebar from '../../AdminComponents/Sidebar'
 function AdminHome() {
   return (
     <Box>
-       <Stack direction="row" spacing={1} justifyContent="space-between">
-        <Sidebar/>
-        <AdminFeed/>
-        </Stack> 
-        <AdminNavbar/>
+      <Stack direction="row" spacing={1} justifyContent="space-between">
+        <Sidebar />
+        <AdminFeed />
+      </Stack>
+      <AdminNavbar />
     </Box>
   )
 }

@@ -7,7 +7,7 @@ import { Outlet } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CardBanner from '../../components/CardBanner'
 import { useDispatch, useSelector } from 'react-redux'
-import { enable} from '../../reducers/PlayerReducer'
+import { enable } from '../../reducers/PlayerReducer'
 
 const styles = {
   media: {
@@ -78,14 +78,14 @@ function Album() {
             position: 'relative',
             overflow: 'hidden',
             zIndex: 100,
-            ml:2
+            ml: 2
           }}>Latest Albums For You</Typography>
           <Typography variant="h3" style={styles.overlay} sx={{
             top: '50px',
             left: '20px',
             color: '#FFFFFF',
             fontWeight: 600,
-            ml:2
+            ml: 2
           }}>Top Albums </Typography>
         </Box>
       </Box> : ''}
@@ -97,8 +97,8 @@ function Album() {
       <Box sx={{ bgcolor: "rgba(0, 0, 0,0.31)", mt: 1 }} >
         <Box sx={{ overflow: 'auto' }} className='screen-container'>
           <Stack direction="row" spacing={2} >
-            <Box  sx={{width:'100%'}}>
-              <CardBanner  data={normalizedAlbumData} titleData={titleData} />
+            <Box sx={{ width: '100%' }}>
+              <CardBanner data={normalizedAlbumData} titleData={titleData} />
             </Box>:
           </Stack>
           {/* {showTracks ? <AlbumList albumdata={albumdata} filteredData={filteredData} /> : console.log("hi")} */}

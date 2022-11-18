@@ -6,6 +6,7 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { db } from '../../config/Firebase/FirebaseConfig';
 import { doc, updateDoc } from 'firebase/firestore';
 import ReactCrop from 'react-image-crop';
+import BeatLoader from 'react-spinners/BeatLoader'
 import 'react-image-crop/dist/ReactCrop.css'
 import './styles.css'
 
@@ -25,6 +26,7 @@ function UserProfile() {
   const [src, setSrc] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [completedCrop, setCompletedCrop] = useState()
+  const [loading,setLoading] = useState(false)
   const imageRef = useRef()
   const canvasRef = useRef()
   const [result, setResult] = useState()
@@ -47,12 +49,14 @@ function UserProfile() {
   //IMAGE UPLOADING TO FIREBASE //
 
   const uploadImage = (file) => {
+    setLoading(true)
     setSrc(URL.createObjectURL(file));
     setOpen(true)
   }
 
   const handleSaveImage = () => {
     try {
+      
       const profileImage = result
       updateDoc(doc(db, "users", currentUser[0]?.id), {
         profileImage
@@ -62,6 +66,7 @@ function UserProfile() {
     }
     setOpen(false)
     forceUpdate()
+    setLoading(false)
   }
   useEffect(() => {
     try {
@@ -103,9 +108,11 @@ function UserProfile() {
                 src={currentUser ? item?.profileImage : "/broken-image.jpg"}
                 sx={{ width: 200, height: 200, ml: 6, mt: 3 }}
               >
+                
               </Avatar>
             ))}
             <IconButton sx={{ ml: 15 }} color="primary" aria-label="upload picture" component="label">
+            <BeatLoader loading={loading} color="#FFFFFF" />
               <input hidden accept="image/*" type="file" value={image} accept="image/*"
                 onChange={(e) => uploadImage(e.target.files[0])} />
               <PhotoCamera sx={{ fontSize: '2rem', }} />
