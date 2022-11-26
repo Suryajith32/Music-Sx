@@ -1,22 +1,22 @@
-import {db} from "../config/Firebase/FirebaseConfig"
-import { collection, getDocs,getDoc, addDoc,deleteDoc, doc} from "firebase/firestore"
+import { db } from "../config/Firebase/FirebaseConfig"
+import { collection, getDocs, getDoc, addDoc, deleteDoc, doc } from "firebase/firestore"
 
-const userCollection = collection(db,"albums")
+const userCollection = collection(db, "albums")
 class AlbumDataService {
 
-    addAlbum=(newAlbum)=> {
-        return addDoc(userCollection,newAlbum);
+    addAlbum = (newAlbum) => {
+        return addDoc(userCollection, newAlbum);
     }
-    deleteAlbum=(id)=>{
-        const user = doc(db,"albums",id)
+    deleteAlbum = (id) => {
+        const user = doc(db, "albums", id)
         return deleteDoc(user);
     }
-        getAllAlbum =()=>{
+    getAllAlbum = () => {
         return getDocs(userCollection);
     }
-    getAalbum=()=>{
+    getAalbum = () => {
         return getDoc()
-    }  
+    }
 }
 
 export default new AlbumDataService();

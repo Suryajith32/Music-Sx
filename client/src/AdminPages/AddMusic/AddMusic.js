@@ -52,7 +52,6 @@ function AddMusic() {
             setMessage("Error While upoading image")
         }, () => {
             getDownloadURL(uploadTask.snapshot.ref).then(getDownloadURL => {
-                console.log(getDownloadURL)
                 setImageUrl(getDownloadURL)
                 setMessage("Image Upload Succesfully")
             })

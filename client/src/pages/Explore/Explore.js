@@ -92,8 +92,6 @@ function Explore() {
            forceUpdate()
         }
     }
-
-
     return (
         <Box sx={{ mt: 8 }} >
             <Banner />

@@ -32,20 +32,16 @@ function Recent() {
   }, [])
   const getRrecent = async()=>{
     const unId =   localStorage.getItem("email")
-    console.log(unId)
    const Music = await recentDataService.getAllRrecent();
    const music = Music.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
    const fil = music&&music?.filter(n=>n.email===unId)
-   console.log(fil)
    setSong(fil)
   }
   const handleClickPLay = async (id, e,index,item) => {
-    console.log("music",e)
     dispatch(play(true))
     setCurrentSong(item)
     if (!isPlay) {
         // await recentDataService.addRecent(e)
-        console.log(index)
         dispatch(play(true))
         dispatch(playing(e))
         dispatch(songIndex(index))

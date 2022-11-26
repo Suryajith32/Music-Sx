@@ -19,7 +19,6 @@ function Login() {
 
   useEffect(()=>{
     const user =localStorage.getItem("email")
-    console.log("email", email)
     user? navigate('/home/explore'):navigate('/login')
   },[])
   
@@ -29,7 +28,6 @@ function Login() {
     setEmailReg(regEx)
     if(regEx.test(email)){
          try {
-      console.log(email)
       localStorage.setItem("email", email)
       await signIn(email, password)
       navigate('/home/explore')
@@ -79,7 +77,8 @@ function Login() {
                     <input type="password" placeholder="Password" required="required" defaultValue={password} onChange={(e) => setPassword(e.target.value)} />
                     <Box sx={{color:'red'}}>{message && !password?"Enter Password":''}</Box>
                     <button onClick={handleSubmit} type="submit" className="btn btn-primary btn-block btn-large">Login</button>
-                    <BeatLoader loading={loading} color="#FFFFFF" />
+                    <Box sx={{ml:15}}> <BeatLoader loading={loading} color="#FFFFFF" /></Box>
+                   
                     <Box mt={2}> {error && <Alert severity="error">{error}</Alert>}</Box>
                     <Typography sx={{ mt: 6, ml: 7, color: '#FFFFFF', opacity: 0.5 }}>New User ?<Link to={'/signup'} style={{ textDecoration: 'none', color: "#FFFFFF" }}>Sign up Now </Link> </Typography>
                   </div>

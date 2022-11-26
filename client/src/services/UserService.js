@@ -1,25 +1,24 @@
-import {db} from "../config/Firebase/FirebaseConfig"
-import { collection, getDocs,getDoc, addDoc,deleteDoc, doc} from "firebase/firestore"
+import { db } from "../config/Firebase/FirebaseConfig"
+import { collection, getDocs, getDoc, addDoc, deleteDoc, doc } from "firebase/firestore"
 
-const userCollection = collection(db,"users")
+const userCollection = collection(db, "users")
 class userDataServices {
     //adding a new user to the firebase
-    addUser=(newUser)=> {
-        return addDoc(userCollection,newUser);
+    addUser = (newUser) => {
+        return addDoc(userCollection, newUser);
     }
     //to delete a user
-    deleteUser=(id)=>{
-        const user = doc(db,"users",id)
+    deleteUser = (id) => {
+        const user = doc(db, "users", id)
         return deleteDoc(user);
     }
-        //to get all users
-    getAllUser =()=>{
+    //to get all users
+    getAllUser = () => {
         return getDocs(userCollection);
     }
-    getAuser=()=>{
+    getAuser = () => {
         return getDoc()
     }
-    
 }
 
 export default new userDataServices();

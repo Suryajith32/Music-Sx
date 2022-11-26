@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Box, Container, CssBaseline, InputBase, Typography, alpha, Button, Alert } from '@mui/material'
 import { Stack } from '@mui/system'
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../../context/UserAuthContext';
 import userDataServices from '../../services/UserService'
@@ -19,11 +19,10 @@ export default function Signup({ }) {
   const navigate = useNavigate();
   const { signUp } = useUserAuth();
 
-  useEffect(()=>{
-    const user =localStorage.getItem("email")
-    console.log("email", email)
-    user? navigate('/home/explore'):navigate('/signup')
-  },[])
+  useEffect(() => {
+    const user = localStorage.getItem("email")
+    user ? navigate('/home/explore') : navigate('/signup')
+  }, [])
 
   const handleSubmit = async (e) => {
     const regEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/

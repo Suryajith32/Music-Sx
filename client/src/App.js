@@ -27,13 +27,6 @@ import ProtectedRoutes from './ProtectedRoute';
 import AdminRouteProtect from './AdminRouteProtect';
 
 function App() {
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash) {
-      const token = hash.substring(1).split("&")[0].split("=")[1]
-      localStorage.setItem('token', token)
-    }
-  }, [])
 
   const [toggleDark, settoggleDark] = useState(false);
   const theme = createTheme({

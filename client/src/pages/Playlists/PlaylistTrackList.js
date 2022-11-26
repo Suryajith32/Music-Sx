@@ -9,12 +9,8 @@ import { useDispatch } from 'react-redux'
 import { playing, songIndex, pause, Play, musicRef, play } from '../../reducers/PlayerReducer'
 import { useSelector } from 'react-redux';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
-import { TransitionProps } from '@mui/material/transitions';
 import PlaylistDataService from '../../services/PlaylistService'
-import AddBoxIcon from '@mui/icons-material/AddBox';
 import CloseIcon from '@mui/icons-material/Close';
-import { db } from '../../config/Firebase/FirebaseConfig';
 import styled from '@emotion/styled';
 
 const Transition = React.forwardRef(function Transition(
@@ -48,21 +44,17 @@ function PlaylistTrackList(props) {
     const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0)
     const isPLay = useSelector((state => state.currentTrack.isPlaying));
 
-
     useEffect(() => {
-        console.log("props", props.listdata)
         setMusic(props.listdata.todos)
         setSmlBanner(props.listdata.imageurl)
         setBannerTitle(props.listdata.playlistName)
         getAllMusic()
         setEmail(localStorage.getItem("email"))
-        console.log("email", email)
     }, [reducerValue])
 
     const getAllMusic = async () => {
         const Music = await musicDataService.getAllMusic();
         setSong(Music.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-        console.log(music)
         const unId = localStorage.getItem('email')
         const data = await PlaylistDataService.getAllfav()
         const tobeFiltered = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -70,7 +62,6 @@ function PlaylistTrackList(props) {
     }
 
     const handleClickPLay = async (id, e, index, item) => {
-        console.log("music", e)
         setIsPlay(!isPlay)
         setCurrentSong(item)
         const rec = {
@@ -79,38 +70,22 @@ function PlaylistTrackList(props) {
         }
         if (!isPlay) {
             await recentDataService.addRecent(rec)
-            console.log(index)
             dispatch(play(true))
             dispatch(playing(e))
             dispatch(songIndex(index))
             dispatch(musicRef(id))
-            console.log("whyyyyyyyyyyyyy")
         } else {
             dispatch(pause(true))
         }
     }
-    //  const handleFav = async (e) => {
-    //     const fav = {
-    //         ...e,
-    //         email
-    //     }
-    //     console.log("merged data", fav)
-    //     await favDataService.addfav(fav)
-    // }
 
     // ADDING SONGS TO PLAYLIST //
 
     const addSongs = async () => {
         setOpen(true);
-
     }
     const addToPlaylist = async (item) => {
         console.log(playlistMusic)
-        //    console.log(console.log(d)
-        // const cityRef = doc(db, 'playlist', props.listdata.id);
-        // updateDoc(cityRef, {data});
-
-        // await PlaylistDataService.addfav(add)
         alert('Added to playlist')
     }
     const handleClose = () => {
@@ -125,9 +100,7 @@ function PlaylistTrackList(props) {
     }
     return (
         <div>
-
             <Box height="40vh" sx={{ bgcolor: "rgba(0, 0, 0,0.31)", mt: 5 }}>
-             
                 <Paper
                     sx={{
                         p: 2,
@@ -139,8 +112,8 @@ function PlaylistTrackList(props) {
                 >
                     <Grid container spacing={2}>
                         <Grid item>
-                            <ButtonBase sx={{ width: 128, height: 128,ml:2 }}>
-                                <Img  alt="complex" src={smlBanner} />
+                            <ButtonBase sx={{ width: 128, height: 128, ml: 2 }}>
+                                <Img alt="complex" src={smlBanner} />
                             </ButtonBase>
                         </Grid>
                         <Grid item xs={12} sm container>
@@ -156,27 +129,21 @@ function PlaylistTrackList(props) {
                                         color: '#FFFFFF',
                                         fontWeight: 600,
                                         opacity: 0.5,
-
                                     }}>
-                                        <button onClick={deletePlaylist} className='play-btn'><DeleteIcon fontSize='large' sx={{ mt: 2,ml:2 }} /></button> Delete PLaylist
-
+                                        <button onClick={deletePlaylist} className='play-btn'><DeleteIcon fontSize='large' sx={{ mt: 2, ml: 2 }} /></button> Delete PLaylist
                                     </Typography>
-
                                 </Grid>
                                 <Grid item>
                                 </Grid>
                             </Grid>
                             <Grid item>
-
                             </Grid>
                         </Grid>
                     </Grid>
                 </Paper>
             </Box>
-
             <Card sx={{ mt: 2, background: "rgba(0, 0, 0,0.31)" }}>
                 <CardContent style={{ overflow: 'auto', background: "rgba(0, 0, 0,0.31)" }}>
-
                     <Box sx={{ maxHeight: '100vh', left: 0 }} >
                         {music && music?.map((item, index) => (
                             <Box key={index} sx={{ mt: 4 }}>
@@ -209,7 +176,6 @@ function PlaylistTrackList(props) {
                                     </Box>
                                     <Box >
                                         <Box sx={{ mt: 1 }}>
-
                                             <button onClick={() => handleClickPLay(item.musicUrl, music, index, item)} className='play-btn'>
                                                 {/* <audio src={currentSong} ref={audioElm} /> */}
                                                 {currentSong === item && isPlay ? <PauseCircleFilledIcon sx={{ mr: 8, color: "#FFFFFF" }} /> : <PlayCircleFilledIcon sx={{ mr: 8, color: "#FFFFFF" }} />}
@@ -230,7 +196,6 @@ function PlaylistTrackList(props) {
                 // onClose={handleClose}
                 aria-describedby="alert-dialog-slide-description"
             >
-
                 <DialogContent sx={{
                     background: "linear-gradient(to right, #0f0c29, #302b63, #24243e)",
                     maxHeight: '80vh', minHeight: '100vh', maxWidth: '100%'
@@ -280,19 +245,12 @@ function PlaylistTrackList(props) {
                                             </Box>
                                         ))}
                                     </Box>
-
                                 </CardContent>
                             </Card>
                         </Box>
-
-
-
-
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    {/* <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose}>Agree</Button> */}
                 </DialogActions>
             </Dialog>
         </div>

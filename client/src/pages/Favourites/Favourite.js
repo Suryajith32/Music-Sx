@@ -41,20 +41,16 @@ function Favourite() {
 
   const getRrecent = async () => {
     const unId = localStorage.getItem("email")
-    console.log(unId)
     const Music = await favDataService.getAllfav();
     const music = Music.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     const fil = music && music?.filter(n => n.email === unId)
-    console.log(fil)
     setSong(fil)
   }
   const handleClickPLay = async (id, e, index, item) => {
-    console.log("music", e)
     dispatch(play(true))
     setCurrentSong(item)
     if (!isPlay) {
       await recentDataService.addRecent(e)
-      console.log(index)
       dispatch(play(true))
       dispatch(playing(e))
       dispatch(songIndex(index))
@@ -67,7 +63,6 @@ function Favourite() {
     forceUpdate();
     await favDataService.deletefav(id)
     setDelete(true)
-
   }
 
   return (
@@ -80,7 +75,7 @@ function Favourite() {
           <Typography style={styles.overlay} sx={{
             top: '10px',
             left: '20px',
-            ml:2,
+            ml: 2,
             color: '#FFFFFF',
             fontWeight: 600,
             opacity: 0.5
@@ -88,7 +83,7 @@ function Favourite() {
           <Typography variant="h3" style={styles.overlay} sx={{
             top: '50px',
             left: '20px',
-            ml:2,
+            ml: 2,
             color: '#FFFFFF',
             fontWeight: 600,
           }}>Favourites </Typography>
@@ -139,7 +134,7 @@ function Favourite() {
                           {currentSong === item && isPLay ? <PauseCircleFilledIcon sx={{ mr: 8, color: "#FFFFFF" }} /> : <PlayCircleFilledIcon sx={{ mr: 8, color: "#FFFFFF" }} />}
                         </button>
                         <button className='play-btn' onClick={() => handleDeleteFavorite(item.id)}><DeleteIcon sx={{ mr: 8, color: "#FFFFFF" }} /></button>
-                        </Grid>
+                      </Grid>
                     </Box>
                   </Box>
                 </Stack>

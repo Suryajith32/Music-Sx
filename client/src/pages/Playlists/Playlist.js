@@ -44,7 +44,6 @@ const Transition = React.forwardRef(function Transition(
 //SEARCH BAR STYLES //
 
 const Search = styled('div')(({ theme }) => ({
-
   borderRadius: theme.shape.borderRadius,
   backgroundColor: "#FFFFFF",
   opacity: 0.8,
@@ -54,7 +53,6 @@ const Search = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     marginLeft: theme.spacing(3),
     width: 'auto',
-
   },
 }));
 
@@ -88,22 +86,19 @@ function Playlist() {
   const [playlist, setPlaylist] = useState();
   const [tracklist, setTracklist] = useState(false);
   const [image, setImage] = useState();
-  const [track, setTrack] = useState()
   const [open, setOpen] = React.useState(false);
   const [music, setMusic] = useState()
-  const navigate = useNavigate();
   const [email, setEmail] = useState()
   const [playlistName, setPlaylistName] = useState('')
   const [showTracks, setShowTracks] = useState(false)
   const [filteredData, setFilteredData] = useState()
   const [listdata, setListdata] = useState()
   const [todos, setTodos] = useState('')
-  const [enable,setEnable] = useState(true)
+  const [enable, setEnable] = useState(true)
   const [message, setMessage] = useState();
   const [imageurl, setImageUrl] = useState();
   const [search, setSearch] = useState("");
   const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0)
-
 
   useEffect(() => {
     getAllMusic()
@@ -115,37 +110,30 @@ function Playlist() {
 
   const getAllMusic = async () => {
     setEmail(localStorage.getItem("email"))
-    console.log("email", email)
     const Music = await musicDataService.getAllMusic();
     setMusic(Music.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    console.log(music)
   }
 
   //GETING PLAYLIST DATA//
 
   const getPlayListData = async () => {
     const unId = localStorage.getItem("email")
-    console.log(unId)
     const PlayListsData = await PlaylistDataService.getAllfav()
     const data = PlayListsData?.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
     const filteredData = data && data?.filter(n => n.email === unId)
-    console.log('filteredData', filteredData)
     setPlaylist(filteredData)
   }
 
   //FOR CREATING PLAYLIST //
 
   const createPlaylist = () => {
-    console.log("this is playlist")
-    console.log('playlistData', playlist)
     setOpen(true);
-
   }
+
   //IMAGE UPLOADING TO FIREBASE //
 
   const uploadImage = (e) => {
     const imageFile = e.target.files[0];
-    console.log("umagefile", imageFile)
     setImage(imageFile)
     const storageRef = ref(storage, `Images/ &{Date.now()}-${imageFile.name}`)
     const uploadTask = uploadBytesResumable(storageRef, imageFile);
@@ -156,15 +144,8 @@ function Playlist() {
       setMessage("Error While upoading image")
     }, () => {
       getDownloadURL(uploadTask.snapshot.ref).then(getDownloadURL => {
-        console.log("thisisurl", getDownloadURL)
         const profileImage = getDownloadURL
-        console.log("This is profile image", profileImage)
-        console.log("imageprofile", profileImage)
-        //  updateDoc(doc(db, "users", currentUser[0]?.id), {
-        //    profileImage
-        // });
         setImageUrl(getDownloadURL)
-
       })
     })
   }
@@ -172,9 +153,6 @@ function Playlist() {
   //ADDING SONG TO PLAYLIST //
 
   const addToPlaylist = async () => {
-
-    console.log("playlistname", playlistName)
-    console.log('playlistitem', todos)
     const songdata = {
       email,
       todos,
@@ -190,26 +168,24 @@ function Playlist() {
 
   const playlistHandler = (playlist) => {
     setEnable(false)
-    console.log("this is play", playlist)
     setListdata(playlist)
     setShowTracks(!showTracks)
-
   }
   const discardList = () => {
     setOpen(false)
   }
-  const deleteItem=(id)=>{
-  const removeItems = todos&&todos?.filter((todo)=> todo.id !== id)
-  setTodos(removeItems)
+  const deleteItem = (id) => {
+    const removeItems = todos && todos?.filter((todo) => todo.id !== id)
+    setTodos(removeItems)
   }
-  const playlistClose=()=>{
+  const playlistClose = () => {
     setEnable(true)
     setShowTracks(false)
   }
 
   return (
     <Box sx={{ mt: 8, bgcolor: "rgba(0, 0, 0,0.31)" }}>
-      { enable ? <Box height="38vh" sx={{ bgcolor: "rgba(0, 0, 0,0.31)", mt: 5 }} >
+      {enable ? <Box height="38vh" sx={{ bgcolor: "rgba(0, 0, 0,0.31)", mt: 5 }} >
         <Box position="fixed" style={styles.box} >
           <Box
             height="225"
@@ -227,42 +203,41 @@ function Playlist() {
             color: '#FFFFFF',
             fontWeight: 600,
           }}>Top PlayLists</Typography>
-         <Box sx={{ pt: 20, color: '#FFFFFF', mb: 2 }} >
-          <button className='play-btn' onClick={createPlaylist} ><AddCircleOutlineOutlinedIcon fontSize='large' sx={{ ml: 3, mt: 1, color: '#FFFFFF' }} />Create Playlist</button>
+          <Box sx={{ pt: 20, color: '#FFFFFF', mb: 2 }} >
+            <button className='play-btn' onClick={createPlaylist} ><AddCircleOutlineOutlinedIcon fontSize='large' sx={{ ml: 3, mt: 1, color: '#FFFFFF' }} />Create Playlist</button>
+          </Box>
         </Box>
-        </Box>
-      </Box>:''}
-      {!enable? 
-         <Box>
-          <Button sx={{ml:3}} onClick={playlistClose}><ArrowBackIcon sx={{color:'#FFFFFF'}}/></Button>
-         </Box> :'' 
+      </Box> : ''}
+      {!enable ?
+        <Box>
+          <Button sx={{ ml: 3 }} onClick={playlistClose}><ArrowBackIcon sx={{ color: '#FFFFFF' }} /></Button>
+        </Box> : ''
       }
       <Box sx={{ bgcolor: "rgba(0, 0, 0,0.31)", mt: 1 }} >
         {tracklist ? <Outlet /> :
           <Box sx={{ mt: 4, overflow: 'auto' }} className='screen-container'>
-
             <Stack spacing={2}>
-             { enable?  <Box>
-              <div className='library-body'>
-                {playlist && playlist?.map(playlist => (
-                  <div className='playlist-card' key={playlist.id} onClick={(e) => playlistHandler(playlist)} >
-                    <img src={playlist.imageurl} className="playlist-image" alt='playlidt-Art' />
-                    <p className='playlist-title'>{playlist.playlistName}</p>
-                    {/* <p className='playlist-subtitle' > Songs</p> */}
-                    <div className='playlist-fade'>
-                      <PlayCircleFilledIcon sx={{ size: "80px", color: "#FFFFFF" }} />
+              {enable ? <Box>
+                <div className='library-body'>
+                  {playlist && playlist?.map(playlist => (
+                    <div className='playlist-card' key={playlist.id} onClick={(e) => playlistHandler(playlist)} >
+                      <img src={playlist.imageurl} className="playlist-image" alt='playlidt-Art' />
+                      <p className='playlist-title'>{playlist.playlistName}</p>
+                      {/* <p className='playlist-subtitle' > Songs</p> */}
+                      <div className='playlist-fade'>
+                        <PlayCircleFilledIcon sx={{ size: "80px", color: "#FFFFFF" }} />
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-              </Box>:''}
+                  ))}
+                </div>
+              </Box> : ''}
             </Stack>
-            {showTracks ? <PlaylistTrackList listdata={listdata} filteredData={filteredData} /> : console.log("hi")}
+            {showTracks ? <PlaylistTrackList listdata={listdata} filteredData={filteredData} /> : ''}
           </Box>
         }
       </Box>
       <Dialog
-      fullScreen
+        fullScreen
         open={open}
         TransitionComponent={Transition}
         keepMounted
@@ -303,19 +278,19 @@ function Playlist() {
                   inputProps={{ 'aria-label': 'search' }}
                   onChange={(e) => setSearch(e.target.value)}
                 />
-               </Search>
+              </Search>
               </Box>
               <Box mt={1}>
-                { todos&&todos?.map((item,index)=>(
+                {todos && todos?.map((item, index) => (
                   <Stack direction='row' justifyContent='space-between'>
-                    <Typography  sx={{color:'#FFFFFF',mt:2}}>{item?.song}</Typography>
+                    <Typography sx={{ color: '#FFFFFF', mt: 2 }}>{item?.song}</Typography>
                     <Box>
-                      <button className='play-btn' onClick={(e)=>deleteItem(item.id)}><BackspaceIcon sx={{color:'#FFFFFF',mt:2}}/></button>
+                      <button className='play-btn' onClick={(e) => deleteItem(item.id)}><BackspaceIcon sx={{ color: '#FFFFFF', mt: 2 }} /></button>
                     </Box>
                   </Stack>
                 ))}
               </Box>
-              <Card sx={{ mt:4, background: "rgba(0, 0, 0,0.31)" }}>
+              <Card sx={{ mt: 4, background: "rgba(0, 0, 0,0.31)" }}>
                 <CardContent style={{ overflow: 'auto', background: "rgba(0, 0, 0,0.31)" }}>
                   <Box sx={{ maxHeight: '100vh', left: 0 }} >
                     {music && music?.filter((item) => {

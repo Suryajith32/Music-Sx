@@ -2,7 +2,6 @@ import styled from '@emotion/styled';
 import { alpha, Box, Card, CardContent, CardMedia, Grid, InputBase, MenuItem, Select, TextField, Typography, } from '@mui/material'
 import React, { useEffect, useReducer, useState } from 'react'
 import SearchIcon from '@mui/icons-material/Search';
-import AddIcon from '@mui/icons-material/Add';
 import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled';
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
 import musicDataService from '../../services/MusicService';
@@ -80,11 +79,9 @@ function Discover() {
   const [favmusic, setFavMusic] = useState()
   const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0)
 
-  console.log(search)
   useEffect(() => {
     getAllMusic()
     setEmail(localStorage.getItem("email"))
-    console.log("email", email)
   }, [reducerValue])
 
   const getAllMusic = async () => {
@@ -101,7 +98,6 @@ function Discover() {
     setFavName(SongName)
   }
   const handleClickPLay = async (id, e, index, item) => {
-    console.log("music", e)
     dispatch(play(false))
     setCurrentSong(item)
     const rec = {

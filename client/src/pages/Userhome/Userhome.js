@@ -14,7 +14,6 @@ function Userhome() {
     console.log("isSIdebar", isSideBar)
     setOpen(!open)
   }
-
   return (
     <>
       <Box>

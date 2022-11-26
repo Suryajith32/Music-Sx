@@ -21,16 +21,15 @@ function New() {
     const [currentSong, setCurrentSong] = useState()
     const [email, setEmail] = useState()
     const [favmusic, setFavMusic] = useState()
-    const [favName,setFavName] = useState();
+    const [favName, setFavName] = useState();
     const dispatch = useDispatch()
     const [reducerValue, forceUpdate] = useReducer(x => x + 1, 0)
 
     useEffect(() => {
         getAllMusic()
         setEmail(localStorage.getItem("email"))
-        console.log("email", email)
 
-    }, [isPlay,reducerValue])
+    }, [isPlay, reducerValue])
     const getAllMusic = async () => {
         const unId = localStorage.getItem("email")
         const Music = await musicDataService.getAllMusic();
@@ -39,15 +38,12 @@ function New() {
         const data = favMusic?.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
         const fil = data && data?.filter(n => n.email === unId)
         setFavMusic(fil)
-        console.log(fil, "filterred")
-        const SongName = fil && fil?.map((doc)=>{
-        return doc.song
+        const SongName = fil && fil?.map((doc) => {
+            return doc.song
         })
         setFavName(SongName)
-        console.log(music)
     }
     const handleClickPLay = async (id, e, index, item) => {
-        console.log("music", e)
         dispatch(play(false))
         setCurrentSong(item)
         const rec = {
@@ -56,7 +52,6 @@ function New() {
         }
         if (!isPlay) {
             await recentDataService.addRecent(rec)
-            console.log(index)
             dispatch(play(true))
             dispatch(playing(e))
             dispatch(songIndex(index))
@@ -67,27 +62,23 @@ function New() {
     }
     const handleFav = async (e) => {
         const check = favName && favName?.includes(e.song)
-        if(!check){
+        if (!check) {
             const fav = {
                 ...e,
                 email
             }
-            console.log("merged data", fav)
             await favDataService.addfav(fav)
             forceUpdate()
-        }else{
-            const Unlike = favmusic&&favmusic?.filter((n)=>n.song ===e.song)
-            console.log("unlike",Unlike)
+        } else {
+            const Unlike = favmusic && favmusic?.filter((n) => n.song === e.song)
             await favDataService.deletefav(Unlike[0]?.id)
             forceUpdate()
         }
-       
     }
     return (
         <>
             <Card sx={{ mt: 8, background: "rgba(0, 0, 0,0.31)" }}>
                 <CardContent style={{ overflow: 'auto', background: "rgba(0, 0, 0,0.31)" }}>
-
                     <Box sx={{ maxHeight: '100vh', left: 0 }} >
                         {music && music.map((item, index) => (
                             <Box key={index} sx={{ mt: 4 }}>
@@ -126,12 +117,11 @@ function New() {
                                                 justifyContent="flex-end"
                                                 alignItems="center"
                                             >
-                                                <button className='play-btn'onClick={() => handleFav(item)}>{ favName&&favName?.includes(item.song)? <FavoriteIcon sx={{ mr: 8, color: "#FFFFFF" }} />:<FavoriteBorderIcon sx={{ mr: 8, color: "#FFFFFF" }} />}</button>
+                                                <button className='play-btn' onClick={() => handleFav(item)}>{favName && favName?.includes(item.song) ? <FavoriteIcon sx={{ mr: 8, color: "#FFFFFF" }} /> : <FavoriteBorderIcon sx={{ mr: 8, color: "#FFFFFF" }} />}</button>
                                                 <button onClick={() => handleClickPLay(item.musicUrl, music, index, item)} className='play-btn'>
                                                     {currentSong === item && isPLay ? <PauseCircleFilledIcon sx={{ mr: 8, color: "#FFFFFF" }} /> : <PlayCircleFilledIcon sx={{ mr: 8, color: "#FFFFFF" }} />}
                                                 </button>
-                                               
-                                                </Grid>
+                                            </Grid>
                                         </Box>
                                     </Box>
                                 </Stack>
